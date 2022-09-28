@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {useSelector} from 'react-redux';
+
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -27,14 +29,21 @@ const HomeStackContainer = () => {
 };
 
 const Navigator = () => {
+  const authStatus = useSelector(state => state.authReducer.auth);
+
+  console.log(authStatus, 'authStatusauthStatus');
+
   return (
     <NavigationContainer>
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        <MainStack.Screen name="Auth" component={AuthStackContainer} />
-        <MainStack.Screen name="Home" component={HomeStackContainer} />
+        {authStatus ? (
+          <MainStack.Screen name="Home" component={HomeStackContainer} />
+        ) : (
+          <MainStack.Screen name="Auth" component={AuthStackContainer} />
+        )}
       </MainStack.Navigator>
     </NavigationContainer>
   );

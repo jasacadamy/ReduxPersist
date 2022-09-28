@@ -1,14 +1,27 @@
 import React from 'react';
-import {View, Text, Button, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
 import {LoginOrRegisterSchema} from '../Schema';
 
+import {registerAccount} from '../Reducer/AuthReducer';
+import {useDispatch, useSelector} from 'react-redux';
+
 const RegisterScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const authData = useSelector(state => state.authReducer);
+  console.log(authData, 'authDataauthData');
+
   const onSubmitPress = values => {
-    console.log(values, 'vvaluesvaluesvalues');
-    // navigation.goBack();
+    dispatch(registerAccount(values));
   };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -56,7 +69,15 @@ const RegisterScreen = () => {
               ) : null}
             </View>
             <View style={{flexDirection: 'row', marginTop: 50}}>
-              <Button onPress={handleSubmit} title="Register" color="#841584" />
+              {authData?.loading ? (
+                <ActivityIndicator color="black" size="large" />
+              ) : (
+                <Button
+                  onPress={handleSubmit}
+                  title="Register"
+                  color="#841584"
+                />
+              )}
             </View>
           </>
         )}

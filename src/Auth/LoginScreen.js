@@ -6,6 +6,7 @@ import {authenticate} from '../Reducer/AuthReducer';
 import {useDispatch} from 'react-redux';
 
 import {Formik} from 'formik';
+import {loginAccount} from '../Reducer/AuthReducer';
 
 import {LoginOrRegisterSchema} from '../Schema';
 
@@ -21,6 +22,7 @@ const LoginScreen = () => {
   };
   const handleSubmitPress = values => {
     console.log(values, 'valuesvalues');
+    dispatch(loginAccount(values));
   };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

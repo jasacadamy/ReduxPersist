@@ -16,11 +16,11 @@ import {Provider} from 'react-redux';
 const App = () => {
   console.log(store.getState(), 'sdfsdf');
   return (
-    <View style={{flex: 1}}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <View style={{flex: 1}}>
         <Navigator />
-      </Provider>
-    </View>
+      </View>
+    </Provider>
   );
 };
 

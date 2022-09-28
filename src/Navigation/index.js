@@ -11,7 +11,7 @@ const MainStack = createNativeStackNavigator();
 
 const AuthStackContainer = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={{headerShown: false}}>
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Register" component={RegisterScreen} />
     </AuthStack.Navigator>
@@ -29,7 +29,10 @@ const HomeStackContainer = () => {
 const Navigator = () => {
   return (
     <NavigationContainer>
-      <MainStack.Navigator>
+      <MainStack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
         <MainStack.Screen name="Auth" component={AuthStackContainer} />
         <MainStack.Screen name="Home" component={HomeStackContainer} />
       </MainStack.Navigator>

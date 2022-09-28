@@ -7,6 +7,8 @@ import {useDispatch} from 'react-redux';
 
 import {Formik} from 'formik';
 
+import {LoginOrRegisterSchema} from '../Schema';
+
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -17,7 +19,9 @@ const LoginScreen = () => {
     dispatch(authenticate());
     navigation.navigate('Home');
   };
-  const handleSubmit = () => {};
+  const handleSubmitPress = values => {
+    console.log(values, 'valuesvalues');
+  };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={{fontSize: 30, color: 'black', marginBottom: 30}}>
@@ -25,8 +29,16 @@ const LoginScreen = () => {
       </Text>
       <Formik
         initialValues={{email: '', password: ''}}
-        onSubmit={values => console.log(values)}>
-        {({handleChange, handleBlur, handleSubmit, values}) => (
+        validationSchema={LoginOrRegisterSchema}
+        onSubmit={handleSubmitPress}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
           <>
             <View>
               <TextInput
@@ -36,6 +48,9 @@ const LoginScreen = () => {
                 style={style.inputContainer}
                 placeholder="Enter email"
               />
+              {errors.email && touched.email ? (
+                <Text style={{color: 'red'}}>{errors.email}</Text>
+              ) : null}
               <View style={{height: 20}} />
               <TextInput
                 onChangeText={handleChange('password')}
@@ -45,6 +60,9 @@ const LoginScreen = () => {
                 placeholder="Enter password"
                 secureTextEntry
               />
+              {errors.password && touched.password ? (
+                <Text style={{color: 'red'}}>{errors.password}</Text>
+              ) : null}
             </View>
             <View style={{flexDirection: 'row', marginTop: 50}}>
               <Button onPress={handleSubmit} title="Login" color="#841584" />

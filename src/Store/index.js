@@ -13,8 +13,6 @@ import AuthReducer from '../Reducer/AuthReducer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import logger from 'redux-logger';
-
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -36,7 +34,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(logger),
+    }),
 });
 
 export const persistor = persistStore(store);

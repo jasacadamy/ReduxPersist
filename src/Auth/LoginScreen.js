@@ -49,6 +49,7 @@ const LoginScreen = () => {
                 value={values.email}
                 style={style.inputContainer}
                 placeholder="Enter email"
+                autoCapitalize="none"
               />
               {errors.email && touched.email ? (
                 <Text style={{color: 'red'}}>{errors.email}</Text>
@@ -61,6 +62,7 @@ const LoginScreen = () => {
                 style={style.inputContainer}
                 placeholder="Enter password"
                 secureTextEntry
+                autoCapitalize="none"
               />
               {errors.password && touched.password ? (
                 <Text style={{color: 'red'}}>{errors.password}</Text>

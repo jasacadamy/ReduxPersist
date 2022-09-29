@@ -27,11 +27,20 @@ export const loginAccount = createAsyncThunk(
   },
 );
 
+export const signOut = createAsyncThunk('auth/signOut', async () => {
+  let user = await auth().currentUser;
+  if (user) {
+    await auth().signOut();
+  }
+  return {};
+});
+
 export const authSlicer = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: builder => {
+    //register case
     builder.addCase(registerAccount.pending, state => {
       state.loading = true;
       state.email = '';
@@ -51,6 +60,8 @@ export const authSlicer = createSlice({
       state.uid = '';
     });
 
+    //login case
+
     builder.addCase(loginAccount.pending, state => {
       state.loading = true;
       state.email = '';
@@ -64,6 +75,15 @@ export const authSlicer = createSlice({
       state.uid = actions.payload.uid;
     });
     builder.addCase(loginAccount.rejected, (state, actions) => {
+      state.loading = false;
+      state.auth = false;
+      state.email = '';
+      state.uid = '';
+    });
+
+    //signout
+
+    builder.addCase(signOut.fulfilled, (state, actions) => {
       state.loading = false;
       state.auth = false;
       state.email = '';
